@@ -5,7 +5,7 @@ may be useful.
 
 You will need to use pip3 to install the feeparser file
 
-** pip3 install feedparser **
+__pip3 install feedparser__
 
 ## TODO
 
