@@ -65,15 +65,13 @@ def displayFeed(arrayInput):
         breaker("=")
         print(bcolors.OKBLUE + "There is only one item currently" + bcolors.ENDC)
         breaker("=")
-        print('')
-        breaker("=")
         print(bcolors.FAIL + "Title: " + bcolors.ENDC + arrayInput[0]["Title"])
         print(bcolors.FAIL + "URL: " + bcolors.ENDC+  arrayInput[0]["URL"])
         print(bcolors.FAIL + "Published: " + bcolors.ENDC +  arrayInput[0]["Time"])
         breaker("=")
-        arrayCount = 0
 
     elif arrayCount > 1:
+        breaker("=")
         print(bcolors.WARNING + "There are " + str(arrayCount) + " items currently" + bcolors.ENDC)
         breaker("=")
         for i in range(0,arrayCount):
@@ -83,7 +81,7 @@ def displayFeed(arrayInput):
                 breaker("-")
 
     else:
-        print('There are no incidents \n')
+        print('No Items to Show \n')
 
 def clearscreen():
     '''Clear the screen depending on what OS you're running'''
@@ -98,6 +96,7 @@ def menu():
     print('2. Prescribed Burns')
     print('3. Firebans')
     print('4. Weather Warnings')
+    print('0. Exit Application')
 
     print('\nPlease select an option\n')
     userchoice = input('Please choose a menu item > ')
@@ -119,6 +118,9 @@ def menu():
 
     elif userchoice == 4:
         weatherwarningsWAmenu()
+
+    elif userchoice == 0:
+        quit
             
     else:
         print('Invalid Option')

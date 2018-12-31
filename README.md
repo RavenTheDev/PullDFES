@@ -3,6 +3,10 @@ This is a simple script that pulls DFES information in our area. This was create
 in our area badmouth the response time of our local volunteer firefighters. Just made for fun / to learn, but 
 may be useful.
 
+You will need to use pip3 to install the feeparser file
+
+** pip3 install feedparser **
+
 ## TODO
 
 - Create menu where users can choose from all areas
