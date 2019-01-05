@@ -7,6 +7,11 @@ You will need to use pip3 to install the feeparser file
 
 __pip3 install feedparser__
 
+To run the file:
+
+__python3 PullDFESInformation.py__
+
 ## TODO
 
 - Create menu where users can choose from all areas
+- Change pull* Functions to only append valid data to the array
