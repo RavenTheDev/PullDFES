@@ -6,12 +6,5 @@ import functions as DFESFunctions #This holds all the custom DFESFunctions for t
 #===== Start of the Application =====
 # First we are going to setup the application
 
-DFESFunctions.clearscreen()
-DFESFunctions.breaker('=')
-print('Obtaining Data. Please Wait ...\n')
-DFESFunctions.pullFireBans()
-DFESFunctions.pullIncidents()
-DFESFunctions.pullPrescribedBurns()
-DFESFunctions.pullWeatherWarningsWA()
-time.sleep(0.5)
+DFESFunctions.setup()
 DFESFunctions.mainMenu()

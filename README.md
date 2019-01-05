@@ -11,7 +11,14 @@ To run the file:
 
 __python3 PullDFESInformation.py__
 
-## TODO
+# TODO
 
 - Create menu where users can choose from all areas
 - Change pull* Functions to only append valid data to the array
+
+# Change Log
+
+## Version 1:
+Version 1 is now completed. The application will check if there are any items from the feeds
+and will only add them to the array if there are items that match the right parameters.
+The application will also timeout if the information is not pulled from the site within 5 seconds (if the connection is made, and takes longer,it won't time out)

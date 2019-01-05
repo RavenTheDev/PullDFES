@@ -99,7 +99,7 @@ def mainMenu():
         firebansMenu()
 
     elif userchoice == 4:
-        weatherWarningsWAMenu()
+        weatherReportsMenu()
 
     elif userchoice == 0:
         clearscreen()
@@ -114,7 +114,7 @@ def mainMenu():
 def firebansMenu():
     ''' Display the Fire Bans menu'''
     clearscreen()
-    displayFeed(arrayFirebans)
+    displayFeed(FireBans)
     print('Press any key to return to the main menu')
     input('> ')
     clearscreen()
@@ -123,7 +123,7 @@ def firebansMenu():
 def incidentenu():
     '''Display the Incident Menu'''
     clearscreen()
-    displayFeed(arrayIncidents)
+    displayFeed(Incidents)
     print('Press any key to return to the main menu')
     input('> ')
     clearscreen()
@@ -132,16 +132,34 @@ def incidentenu():
 def prescribedBurnsMenu():
     ''' Display the Prescribed Burns menu '''
     clearscreen()
-    displayFeed(arrayPrescribedBurns)
+    displayFeed(PrescribedBurns)
     print('Press any key to return to the main menu')
     input('> ')
     clearscreen()
     mainMenu()
 
-def weatherWarningsWAMenu():
+def setup():
+    global Incidents
+    global WeatherReports
+    global PrescribedBurns
+    global FireBans
+
+    clearscreen()
+    breaker('=')
+    print('Obtaining Data. Please Wait ...\n')
+
+    Incidents = pullFromWebsiteIntoArray('https://www.emergency.wa.gov.au/data/message.rss',"Incidents")
+
+    WeatherReports = pullFromWebsiteIntoArray('http://www.bom.gov.au/fwo/IDZ00060.warnings_wa.xml',"Weather Reports")
+
+    PrescribedBurns = pullFromWebsiteIntoArray('https://www.dpaw.wa.gov.au/management/fire/prescribed-burning/burns/burns-planned-for-lighting-today?format=feed','Prescribed Burns')
+
+    FireBans= pullFromWebsiteIntoArray('https://www.emergency.wa.gov.au/data/message_TFB.rss',"Fire Bans")
+
+def weatherReportsMenu():
     ''' Display the Weather Warnings menu'''
     clearscreen()
-    displayFeed(arrayWeatherWarningsWA)
+    displayFeed(WeatherReports)
     print('Press any key to return to the main menu')
     input('> ')
     clearscreen()
@@ -200,6 +218,30 @@ def pullWeatherWarningsWA():
             arrayWeatherWarningsWA.append({"URL": feed_weatherWarningsWA.entries[i].link,"Title": feed_weatherWarningsWA.entries[i].title, "Time": feed_weatherWarningsWA.entries[i].published})
         print('Weather Warnings         ' + u'\u2713 \n')
         return arrayWeatherWarningsWA
+
+    except requests.ReadTimeout:
+        print("Timeout getting data!")
+
+def pullFromWebsiteIntoArray(url,name):
+    includes = ['#map','#firedangerratings','#totalfirebans','http://www.bom.gov.au/wa/warnings']
+    try:
+        resp = requests.get(url, timeout =5.0)
+        feed_convert = feedparser.parse(resp.text)
+        dataArray = []
+        if len(feed_convert.entries) > 0 : #If number of entries is more than 0
+            for each_entry in feed_convert.entries:
+                for each_includes in includes:
+                    if each_includes in each_entry.link: #If the word is in the URL
+                        dataArray.append(({"URL": each_entry.link, \
+                        "Title": each_entry.title, \
+                        "Time": each_entry.published})) #Append to the Array
+        if len(dataArray) > 0:
+            print(u'\u2713' + '     ' + name)
+            return dataArray
+
+        else:
+            print(u'\u2713' + '     ' + 'No items for', name)
+            return dataArray
 
     except requests.ReadTimeout:
         print("Timeout getting data!")
